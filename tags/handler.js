@@ -37,32 +37,7 @@ function request(source, site, regex) {
                                         // tries to get another post if it's a video (this was used for discord and we can't embed videos)
                                         ExtractRedditUrl(body, tries);
                                     break;
-                                    default:
-                                        switch (post.media) {
-                                            case null:
-                                                // if media is null try again
-                                                ExtractRedditUrl(body, tries);
-                                            break;
-                                            default:
-                                                // if the media thumbnail is from gfycat try again (thumbnails from gfycat are really low res)
-                                                switch (post.url.includes("gfycat")) {
-                                                    case false:
-                                                        // resolve payload
-                                                        let payload = {
-                                                            url: post.url,
-                                                            source: post.permalink,
-                                                            nsfw: true,
-                                                            tries: tries,
-                                                            time: `${((Date.now() - date) / 1000).toFixed(2)}s`
-                                                        };
-                                                        resolve(payload);
-                                                    break;
-                                                    // tries again
-                                                    default: ExtractRedditUrl(body, tries);
-                                                }
-                                            break;
-                                        }
-                                    break;
+                                    
                                 }
                             break;
                         }
