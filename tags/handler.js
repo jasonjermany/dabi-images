@@ -69,7 +69,7 @@ function request(source, site, regex) {
                     }
                     // just some randomness
                     let sortBy = ["best", "new", "top", "hot"], filter = sortBy[Math.floor(Math.random() *sortBy.length)];
-                    let url = `https://reddit.com/r/${site}/${filter}.json?limit=15`;
+                    let url = `https://reddit.com/r/${site}.json?sort=top&t=day&limit=100`;
                     fetch(url).then(async response => {
                         try {
                             // gets the json response
