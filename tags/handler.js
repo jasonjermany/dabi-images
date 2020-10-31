@@ -18,7 +18,7 @@ function request(source, site, regex) {
                         // grabs a random post
                         let post = body[Math.floor(Math.random() *body.length)].data;
                         // checks if the post url ends with an image extension
-                        switch ((/(\.jpg|\.png|\.gifv|\.mp4|\.gif|\.jpeg).test(post.url)) {
+                        switch ((/(\.jpg|\.png|\.gifv|\.mp4|\.gif|\.jpeg)$/ig).test(post.url)) {
                             case true:
                                 // resolves the payload with all the juicy data
                                 let payload = {
@@ -37,7 +37,32 @@ function request(source, site, regex) {
                                         // tries to get another post if it's a video (this was used for discord and we can't embed videos)
                                         ExtractRedditUrl(body, tries);
                                     break;
-                                    
+                                    default:
+                                        switch (post.media) {
+                                            case null:
+                                                // if media is null try again
+                                                ExtractRedditUrl(body, tries);
+                                            break;
+                                            default:
+                                               
+                                                switch (post.url.includes("redgifs")) {
+                                                    case false:
+                                                        // resolve payload
+                                                        let payload = {
+                                                            url: post.url,
+                                                            source: post.permalink,
+                                                            nsfw: true,
+                                                            tries: tries,
+                                                            time: `${((Date.now() - date) / 1000).toFixed(2)}s`
+                                                        };
+                                                        resolve(payload);
+                                                    break;
+                                                    // tries again
+                                                    default: ExtractRedditUrl(body, tries);
+                                                }
+                                            break;
+                                        }
+                                    break;
                                 }
                             break;
                         }
@@ -59,43 +84,6 @@ function request(source, site, regex) {
                         // if the request fails reject
                         reject(error);
                     });
-                break;
-                
-                case "other":
-                    if (!site) reject({reason: "No url supplied", message: "Couldn't do request because there wasn't a url"});
-                    if (!regex) reject({reason: "No regex supplied", message: "Couldn't do request because there wasn't a regular expression supplied"});
-                    function DoStuffWithThings(html, regex) {
-                        let matches = null;
-                        try {
-                            // tries to match
-                            matches = html.match(regex);
-                        } catch (error) {
-                            reject(error);
-                        }
-                        if (matches === null) reject({reason: "Matches were null", message: "Couldn't find anything with the supplied regex :/"});
-                        // returns matches
-                        resolve(matches);
-                    }
-                    fetch(site).then(async response => {
-                        try {
-                            // attempts to get the response text (html n stuff)
-                            let body = await response.text();
-                            // checks if the response status is ze 200 (OK)
-                            if (response.status !== 200) reject(response);
-                            // magic...
-                            DoStuffWithThings(body, regex);
-                        } catch (error) {
-                            // if it fails to get the text reject the error
-                            reject(error);
-                        }
-                    }).catch(error => {
-                        // if the request fails reject
-                        reject(error);
-                    });
-                break;
-                default:
-                    // if the source isn't supported (like reddit) it'll reject with an error 
-                    reject(new Error(`Unknown source '${source}'`));
                 break;
             }
         }
