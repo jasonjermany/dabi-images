@@ -23,5 +23,9 @@ class RealShit {
         let subreddits = ["panties", "FullBackPanties", "AssholeBehindThong", "assinthong", "PantiesToTheSide", "thongs", "UnderwearGW"];
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
+    titty() {
+        let subreddits = ["tittydrop"];
+        return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
+    }
 }
 module.exports = new RealShit();
