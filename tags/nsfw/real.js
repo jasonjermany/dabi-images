@@ -22,5 +22,9 @@ class RealShit {
         "facedownassup", "butt", "butts", "pawg", "bigasses", "cosplaybutts", "girlsinyogapants", "BubbleButts", "assinthong", "smalltitsbigass", "CelebrityButts", "booty"];
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
+    thigh() {
+        let subreddits = ["Thighsexual","thighs","thighhighs"];
+        return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
+    }
 }
 module.exports = new RealShit();
