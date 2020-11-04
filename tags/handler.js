@@ -18,7 +18,7 @@ function request(source, site, regex) {
                         // grabs a random post
                         let post = body[Math.floor(Math.random() *body.length)].data;
                         // checks if the post url ends with an image extension
-                        switch ((/(\.jpg|\.png|\.gifv|\.mp4|\.gif|\.jpeg)$/ig).test(post.url)) {
+                        switch ((/(\.jpg|\.png|\.gifv|\.mp4|\.gif|\.jpeg)$/ig).test(post.url) || post.url.includes("redgifs")) {
                             case true:
                                 // resolves the payload with all the juicy data
                                 let payload = {
@@ -43,24 +43,7 @@ function request(source, site, regex) {
                                                 // if media is null try again
                                                 ExtractRedditUrl(body, tries);
                                             break;
-                                            default:
-                                               
-                                                switch (post.url.includes("redgifs")) {
-                                                    case false:
-                                                        // resolve payload
-                                                        let payload = {
-                                                            url: post.url,
-                                                            source: post.permalink,
-                                                            nsfw: true,
-                                                            tries: tries,
-                                                            time: `${((Date.now() - date) / 1000).toFixed(2)}s`
-                                                        };
-                                                        resolve(payload);
-                                                    break;
-                                                    // tries again
-                                                    default: ExtractRedditUrl(body, tries);
-                                                }
-                                            break;
+                                          
                                         }
                                     break;
                                 }
