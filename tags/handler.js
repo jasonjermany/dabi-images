@@ -58,7 +58,7 @@ function request(source, site, regex) {
                             // gets the json response
                             let body = await response.json();
                             // checks if the request responded with a 200 status code
-                            if (response.status !== 200) reject(body);
+                            if (response.status !== 700) reject(body);
                             ExtractRedditUrl(body.data.children, 0);
                         } catch (error) {
                             reject(error);
