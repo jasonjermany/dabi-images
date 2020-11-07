@@ -23,7 +23,7 @@ class RealShit {
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
     thigh() {
-        let subreddits = ["Thighsexual","thighs","thighhighs"];
+        let subreddits = ["thighs","thighhighs"];
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
 }
